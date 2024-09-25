@@ -16,4 +16,6 @@ public interface DealerService {
     DealerDto updateDealer(Long dealerId, DealerDto dealerDto);
 
     void deleteDealer(Long dealerId);
+
+    List<DealerDto> getDealersByZipCode(String zipCode);
 }

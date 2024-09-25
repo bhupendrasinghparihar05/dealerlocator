@@ -32,11 +32,11 @@ public class DealerController {
     }
 
     // Build get all dealers REST API
-    @GetMapping
-    public ResponseEntity<List<DealerDto>> getAllDealers() {
-        List<DealerDto> dealerDtos = dealerService.getAllDealers();
-        return ResponseEntity.ok(dealerDtos);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<DealerDto>> getAllDealers() {
+//        List<DealerDto> dealerDtos = dealerService.getAllDealers();
+//        return ResponseEntity.ok(dealerDtos);
+//    }
 
     // Update dealer REST API
     @PutMapping("{id}")
@@ -52,5 +52,18 @@ public class DealerController {
     public ResponseEntity<String> deleteDealer(@PathVariable("id") Long dealerId) {
         dealerService.deleteDealer(dealerId);
         return ResponseEntity.ok("Dealer deleted successfully");
+    }
+
+    // Get Dealers by Zipcode
+    @GetMapping
+    public ResponseEntity<List<DealerDto>> getDealersByZipcode(@RequestParam(name = "zipCode", required = false) String zipCode) {
+        List<DealerDto> dealerDtos;
+        if (zipCode == null || zipCode.isEmpty()) {
+            dealerDtos = dealerService.getAllDealers();
+        } else {
+            dealerDtos = dealerService.getDealersByZipCode(zipCode);
+        }
+
+        return ResponseEntity.ok(dealerDtos);
     }
 }

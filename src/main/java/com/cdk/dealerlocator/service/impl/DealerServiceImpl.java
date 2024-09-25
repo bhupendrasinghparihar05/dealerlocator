@@ -69,5 +69,13 @@ public class DealerServiceImpl implements DealerService {
         dealerRepository.deleteById(dealerId);
     }
 
+    @Override
+    public List<DealerDto> getDealersByZipCode(String zipCode) {
+        List<Dealer> dealers = dealerRepository.findByZipCode(zipCode);
+
+        return dealers.stream().map((dealer) -> DealerMapper.mapToDealerDto(dealer))
+                .collect(Collectors.toList());
+    }
+
 
 }
