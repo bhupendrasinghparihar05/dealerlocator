@@ -5,7 +5,7 @@ import com.cdk.dealerlocator.entity.Dealer;
 import com.cdk.dealerlocator.exception.ResourceNotFoundException;
 import com.cdk.dealerlocator.mapper.DealerMapper;
 import com.cdk.dealerlocator.service.DealerService;
-import com.cdk.dealerlocator.repo.DealerRepository;
+import com.cdk.dealerlocator.repository.DealerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -72,6 +72,14 @@ public class DealerServiceImpl implements DealerService {
     @Override
     public List<DealerDto> getDealersByZipCode(String zipCode) {
         List<Dealer> dealers = dealerRepository.findByZipCode(zipCode);
+
+        return dealers.stream().map((dealer) -> DealerMapper.mapToDealerDto(dealer))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DealerDto> getDealersByLatLong(double userLat, double userLon, double radius) {
+        List<Dealer> dealers = dealerRepository.findNearbyDealers(userLat, userLon, radius);
 
         return dealers.stream().map((dealer) -> DealerMapper.mapToDealerDto(dealer))
                 .collect(Collectors.toList());

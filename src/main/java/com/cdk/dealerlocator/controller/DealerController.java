@@ -66,4 +66,17 @@ public class DealerController {
 
         return ResponseEntity.ok(dealerDtos);
     }
+
+    // get nearby dealers
+    @GetMapping("/nearby")
+    public ResponseEntity<List<DealerDto>> getNearByDealers(@RequestParam(name = "lat", required = true) String userLat,
+                                                            @RequestParam(name = "lon", required = true) String userLon,
+                                                            @RequestParam(name = "radius", required = true) String radius) {
+        List<DealerDto> dealerDtos;
+        dealerDtos = dealerService.getDealersByLatLong(Double.parseDouble(userLat),
+                Double.parseDouble(userLon),
+                Double.parseDouble(radius));
+
+        return ResponseEntity.ok(dealerDtos);
+    }
 }

@@ -18,4 +18,6 @@ public interface DealerService {
     void deleteDealer(Long dealerId);
 
     List<DealerDto> getDealersByZipCode(String zipCode);
+
+    List<DealerDto> getDealersByLatLong(double userLat, double userLon, double radius);
 }
