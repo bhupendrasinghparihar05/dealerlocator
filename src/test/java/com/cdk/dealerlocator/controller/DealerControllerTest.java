@@ -97,7 +97,7 @@ public class DealerControllerTest {
         ResponseEntity<List<DealerDto>> response  = dealerController.getDealersByZipcode(zipCode);
 
         // Assert
-        assertNotNull(response);
+        assertNull(response);
         assertEquals(2, response.getBody().size());
         assertEquals("City Motors New Branch", response.getBody().get(1).getName());
     }
