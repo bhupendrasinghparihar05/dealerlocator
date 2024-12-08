@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  mysql:
+    image: custom-mysql
+    container_name: custom-mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "cdk"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  dealer-locator-api:
+    image: dealer-locator-api
+    container_name: dealer-locator-api
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/cdk?allowPublicKeyRetrieval=true&useSSL=false"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
+
+networks:
+  app-network:
+    driver: bridge

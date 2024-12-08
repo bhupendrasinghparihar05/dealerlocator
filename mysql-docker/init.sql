@@ -1,47 +1,9 @@
-# API Endpoints
+-- init.sql
 
-## Create Dealer
+CREATE DATABASE IF NOT EXISTS cdk;
 
-```
-POST http://localhost:8080/api/dealers
-```
-```
-curl --location 'http://localhost:8080/api/dealers' \
---header 'Content-Type: application/json' \
---data '{
-  "name": "City Motors",
-  "address": "456 Sunset Blvd",
-  "city": "Los Angeles",
-  "state": "CA",
-  "zip_code": "90028",
-  "latitude": 34.097803,
-  "longitude": -118.328661
-}
-'
-```
+USE cdk;
 
-## Get Dealer by ID
-
-```
-GET http://localhost:8080/api/dealers/1
-```
-
-## Get all dealers
-
-```
-GET http://localhost:8080/api/dealers
-```
-
-## Get near by dealers
-
-```
-GET http://localhost:8080/api/dealers/nearby?lat=34&lon=-118&radius=100
-```
-
-# Database
-
-Table will get created automatically as sson as we run the application
-```
 CREATE TABLE dealers (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -52,11 +14,7 @@ CREATE TABLE dealers (
     latitude DECIMAL(9,6),
     longitude DECIMAL(9,6)
 );
-```
 
-Insert these values in your MySQL DB
-
-```
 -- Dealer 1
 INSERT INTO dealers (name, address, city, state, zip_code, latitude, longitude)
 VALUES ('Metro Auto', '123 Main St', 'Los Angeles', 'CA', '90001', 34.052235, -118.243683);
@@ -96,14 +54,3 @@ VALUES ('Capitol Motors', '222 Congress Ave', 'Austin', 'TX', '73301', 30.274665
 -- Dealer 10
 INSERT INTO dealers (name, address, city, state, zip_code, latitude, longitude)
 VALUES ('Windy City Autos', '999 Michigan Ave', 'Chicago', 'IL', '60601', 41.878113, -87.629799);
-```
-
-# Run the application
-```
-./mvnw spring-boot:run
-```
-
-## How to run this application using docker compose
-
-Read the notes file to get more details.
-
